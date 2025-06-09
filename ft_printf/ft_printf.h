@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: devjorginho <devjorginho@student.42.fr>    +#+  +:+       +#+        */
+/*   By: jde-carv <jde-carv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:49:52 by devjorginho       #+#    #+#             */
-/*   Updated: 2025/06/07 08:28:44 by devjorginho      ###   ########.fr       */
+/*   Updated: 2025/06/09 12:22:35 by jde-carv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <string.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <stdlib.h>
 
 int		formathandle(va_list args, char c);
 int		ft_printf(const char *s, ...);
