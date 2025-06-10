@@ -6,7 +6,7 @@
 /*   By: jde-carv <jde-carv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 06:58:26 by jde-carv          #+#    #+#             */
-/*   Updated: 2025/06/09 21:24:26 by jde-carv         ###   ########.fr       */
+/*   Updated: 2025/06/10 11:40:13 by jde-carv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,51 +26,57 @@ int	ft_atoi(char *s)
 	int result;
 
 	result = 0;
-	while(*s <=  '0' && *s >= '9')
+	while(*s >=  '0' && *s <= '9')
 	{
 		result = result * 10;
-		result = result + *s + '0';
+		result = result + *s - '0';
 		s++;
 	}
 	return (result);
 }
-void	len_to_bits(int len, int pid)
+void	send_len(int len, int pid)
 {
 	
-	int	i = 32;
+	int	i = 31;
 	
-	while(--i)
+	while(i >= 0)
 	{
 		if (len >> i & 1)
 			kill(pid , SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(50);
+		usleep(200);
+		i--;
 	}
 }
-void	char_to_bits(char c, int pid)
+void	send_char(char c, int pid)
 {
 	
-	int	i = 8;
+	int	i = 7;
 
-	while(--i)
+	while(i >= 0)
 	{
 		if (c >> i & 1)
 			kill(pid , SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(50);
+		usleep(200);
+		i--;
 	}
 }
 int main(int ac, char **av)
 {
 	int i;
-
 	i = 0;
-	send_len(ft_strlen(av[2]), ft_atoi(av[1]));
+	if(ac != 3)
+		return (-1);
+	if(ft_atoi(av[1]) < 1)
+		return (-1);
+	send_len(ft_strlen(av[2]) + 1, ft_atoi(av[1]));
 	while (av[2][i])
 	{
-		char_to_bit(av[2][i], ft_atoi(av[1]));
+		send_char(av[2][i], ft_atoi(av[1]));
 		i++;
 	}
+	send_char('\0', ft_atoi(av[1]));
 }

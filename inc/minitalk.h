@@ -1,9 +1,10 @@
 #ifndef MINITALK_H
 # define MINITALK_H
 
-# include "../ft_printf/ft_printf.h"
 # include <signal.h>
-
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_data {
     int     i;
@@ -14,11 +15,11 @@ typedef struct s_data {
     char    *str;
 } t_data;
 
-int     ft_strlen(char *s);
+void    ft_putstr(char *s);
 int     ft_atoi(char *s);
-void	len_to_bits(int len, int pid);
-void	char_to_bits(char c, int pid);
-void    show_msg(int sig);
+void    send_len(int len, int pid);
+void    send_char(char c, int pid);
+void    show_msg(int sig, t_data *data);
 void    signal_to_bits(int sig);
 
 
