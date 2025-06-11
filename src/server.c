@@ -6,12 +6,16 @@
 /*   By: jde-carv <jde-carv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 22:26:29 by jde-carv          #+#    #+#             */
-/*   Updated: 2025/06/11 16:41:44 by jde-carv         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:58:12 by jde-carv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
 
+//void    hand_client_signal(int signal)
+//{
+    
+//}
 void show_msg(int sig, t_data *data)
 {
     if (data->i < 8)
@@ -36,8 +40,7 @@ void show_msg(int sig, t_data *data)
 }
 void signal_to_bits(int sig)
 {
-    static t_data data;
-    
+    static t_data data; 
     if (data.str)
         show_msg(sig, &data);
     else if (data.i < 32)
