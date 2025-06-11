@@ -6,56 +6,54 @@
 /*   By: jde-carv <jde-carv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 22:26:29 by jde-carv          #+#    #+#             */
-/*   Updated: 2025/06/11 15:10:46 by jde-carv         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:41:44 by jde-carv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
 
-void ft_putstr(char *s)
-{
-    if (!s)
-        return;
-    while (*s)
-        write(1, s++, 1);
-}
 void show_msg(int sig, t_data *data)
 {
     if (data->i < 8)
     {
         data->c = (data->c << 1) + (sig == SIGUSR1);
-        data->j++;
+        data->i++;
     }
-    if (data->j == 8)
+    if (data->i == 8)
     {
         data->str[data->index++] = data->c;
-        if(data->str[data->index] == '\0')
+        if(data->index == (data->len - 1))
         {
-            ft_putstr(data->str);
+            //printf("end\n");
+            write(1, data->str,  data->len);
+            free(data->str);
+            data->str = NULL;
             data->index = 0;
+            data->c = 0;
         }
-        data->j = 0;
-        data->c = 0;
+        data->i = 0;
     }
 }
 void signal_to_bits(int sig)
 {
     static t_data data;
     
-    if (data.i < 32)
+    if (data.str)
+        show_msg(sig, &data);
+    else if (data.i < 32)
     {
         data.len = (data.len << 1) + (sig == SIGUSR1);
         data.i++;
     }
     if (data.i == 32)
     {   
+       // printf("len: %i\n", data.len);
         data.str = malloc(data.len + 1);
         if (!data.str)
             return;
         data.i = 0;
     }
-    else
-        show_msg(sig, &data);
+
 }
 
 int main(void)

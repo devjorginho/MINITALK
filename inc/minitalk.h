@@ -16,6 +16,7 @@ typedef struct s_data {
 } t_data;
 
 void    ft_putstr(char *s);
+int     ft_strlen(char *s);
 int     ft_atoi(char *s);
 void    send_len(int len, int pid);
 void    send_char(char c, int pid);
