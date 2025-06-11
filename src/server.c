@@ -6,7 +6,7 @@
 /*   By: jde-carv <jde-carv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 22:26:29 by jde-carv          #+#    #+#             */
-/*   Updated: 2025/06/10 11:42:39 by jde-carv         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:10:46 by jde-carv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void signal_to_bits(int sig)
 {
     static t_data data;
     
-
     if (data.i < 32)
     {
         data.len = (data.len << 1) + (sig == SIGUSR1);
