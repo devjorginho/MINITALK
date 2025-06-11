@@ -1,24 +1,19 @@
 MINITALK_SRC_PATH = src
 MINITALK_INC_PATH = inc
 
-# Define source files
 SERVER = $(MINITALK_SRC_PATH)/server.c
 CLIENT = $(MINITALK_SRC_PATH)/client.c
 
-# Object files
 SERVER_OBJS = $(SERVER:.c=.o)
 CLIENT_OBJS = $(CLIENT:.c=.o)
 
-# Compiler and flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 INCLUDES = -I$(MINITALK_INC_PATH)
 
-# Executable names
 SERVER_NAME = server
 CLIENT_NAME = client
 
-# Targets
 all: $(SERVER_NAME) $(CLIENT_NAME)
 
 $(SERVER_NAME): $(SERVER_OBJS)
@@ -35,7 +30,6 @@ fclean: clean
 
 re: fclean all
 
-# Pattern rule to compile .c to .o
 $(MINITALK_SRC_PATH)/%.o: $(MINITALK_SRC_PATH)/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 

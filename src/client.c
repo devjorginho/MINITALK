@@ -6,7 +6,7 @@
 /*   By: jde-carv <jde-carv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 06:58:26 by jde-carv          #+#    #+#             */
-/*   Updated: 2025/06/11 16:37:47 by jde-carv         ###   ########.fr       */
+/*   Updated: 2025/06/11 18:09:21 by jde-carv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	send_len(int len, int pid)
 			kill(pid , SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(100);
+		usleep(70);
 		i--;
 	}
 }
@@ -60,7 +60,7 @@ void	send_char(char c, int pid)
 			kill(pid , SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(100);
+		usleep(70);
 		i--;
 	}
 }
@@ -78,5 +78,4 @@ int main(int ac, char **av)
 		send_char(av[2][i], ft_atoi(av[1]));
 		i++;
 	}
-	//send_char('\0', ft_atoi(av[1]));
 }
