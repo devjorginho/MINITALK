@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jde-carv <jde-carv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: devjorginho <devjorginho@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 22:26:29 by jde-carv          #+#    #+#             */
-/*   Updated: 2025/06/11 16:58:12 by jde-carv         ###   ########.fr       */
+/*   Updated: 2025/06/11 22:37:24 by devjorginho      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
 
-//void    hand_client_signal(int signal)
-//{
-    
-//}
 void show_msg(int sig, t_data *data)
 {
     if (data->i < 8)
@@ -28,7 +24,6 @@ void show_msg(int sig, t_data *data)
         data->str[data->index++] = data->c;
         if(data->index == (data->len - 1))
         {
-            //printf("end\n");
             write(1, data->str,  data->len);
             free(data->str);
             data->str = NULL;
@@ -38,9 +33,11 @@ void show_msg(int sig, t_data *data)
         data->i = 0;
     }
 }
-void signal_to_bits(int sig)
+void signal_to_bits(int sig, siginfo_t *info, void *context)
 {
-    static t_data data; 
+    static t_data data;
+    (void) context;
+    
     if (data.str)
         show_msg(sig, &data);
     else if (data.i < 32)
@@ -50,20 +47,25 @@ void signal_to_bits(int sig)
     }
     if (data.i == 32)
     {   
-       // printf("len: %i\n", data.len);
         data.str = malloc(data.len + 1);
         if (!data.str)
             return;
         data.i = 0;
     }
-
+    if(info && info->si_pid)
+        kill(info->si_pid, SIGUSR1);
 }
 
 int main(void)
 {
+    struct sigaction sa;
+
     printf("PID: %d\n", getpid());
-    signal(SIGUSR1, signal_to_bits);
-    signal(SIGUSR2, signal_to_bits);
+    sa.sa_sigaction = signal_to_bits;
+    sa.sa_flags = SA_SIGINFO;
+     sigemptyset(&sa.sa_mask);
+    sigaction(SIGUSR1, &sa, NULL);
+    sigaction(SIGUSR2, &sa, NULL);
     while (1)
         pause();
 }

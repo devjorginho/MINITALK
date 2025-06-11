@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jde-carv <jde-carv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: devjorginho <devjorginho@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 06:58:26 by jde-carv          #+#    #+#             */
-/*   Updated: 2025/06/11 18:09:21 by jde-carv         ###   ########.fr       */
+/*   Updated: 2025/06/11 22:42:05 by devjorginho      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
 
+int receive_sig = 0;
+
+void    receive(int sig)
+{
+    (void)sig;
+    receive_sig = 1;
+}
 int	ft_strlen(char *s)
 {
 	int i;
@@ -41,11 +48,13 @@ void	send_len(int len, int pid)
 	
 	while(i >= 0)
 	{
+        receive_sig = 0;   
 		if (len >> i & 1)
 			kill(pid , SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(70);
+		while (!receive_sig)
+            pause();
 		i--;
 	}
 }
@@ -56,18 +65,27 @@ void	send_char(char c, int pid)
 
 	while(i >= 0)
 	{
+        receive_sig = 0;
 		if (c >> i & 1)
 			kill(pid , SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(70);
+		while(!receive_sig)
+            pause();
 		i--;
 	}
 }
 int main(int ac, char **av)
 {
+    struct sigaction sa;
 	int i;
+    
 	i = 0;
+    sa.sa_handler = receive;
+    sa.sa_flags = 0;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGUSR1, &sa, NULL);
+
 	if(ac != 3)
 		return (-1);
 	if(ft_atoi(av[1]) < 1)
