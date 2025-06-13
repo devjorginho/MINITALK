@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: devjorginho <devjorginho@student.42.fr>    +#+  +:+       +#+         #
+#    By: jde-carv <jde-carv@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/13 12:40:40 by devjorginho       #+#    #+#              #
-#    Updated: 2025/06/13 14:27:20 by devjorginho      ###   ########.fr        #
+#    Updated: 2025/06/13 19:14:09 by jde-carv         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 SRCDIR = src
 
-OBJS_COMMON = $(SRCDIR)/utils.o $(SRCDIR)/errors.o
+OBJS_COMMON = $(SRCDIR)/utils.o
 
 all: $(SERVER) $(CLIENT)
 
