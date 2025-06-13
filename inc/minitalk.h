@@ -15,13 +15,18 @@ typedef struct s_data {
     char    *str;
 } t_data;
 
-void    receive(int sig);
-int	ft_strlen(char *s);
-int     ft_atoi(char *s);
-void	send_len(int len, int pid);
-void	send_char(char c, int pid);
-void    show_msg(int sig, t_data *data);
-void    signal_to_bits(int sig, siginfo_t *info, void *context);
+// Utils
 
+void    ft_putstr(char *s);
+void    ft_putnbr(int nb);
+int     is_numeric(const char *s);
+int     ft_strlen(char *s);
+int     ft_atoi(const char *s);
+
+
+// Errors
+
+int     invalid_arguments(void);
+int     print_invalid_pid(void);
 
 #endif

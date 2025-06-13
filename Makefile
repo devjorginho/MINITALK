@@ -1,36 +1,41 @@
-MINITALK_SRC_PATH = src
-MINITALK_INC_PATH = inc
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: devjorginho <devjorginho@student.42.fr>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/06/13 12:40:40 by devjorginho       #+#    #+#              #
+#    Updated: 2025/06/13 14:27:20 by devjorginho      ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-SERVER = $(MINITALK_SRC_PATH)/server.c
-CLIENT = $(MINITALK_SRC_PATH)/client.c
-
-SERVER_OBJS = $(SERVER:.c=.o)
-CLIENT_OBJS = $(CLIENT:.c=.o)
-
+SERVER = server
+CLIENT = client
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-INCLUDES = -I$(MINITALK_INC_PATH)
 
-SERVER_NAME = server
-CLIENT_NAME = client
+SRCDIR = src
 
-all: $(SERVER_NAME) $(CLIENT_NAME)
+OBJS_COMMON = $(SRCDIR)/utils.o $(SRCDIR)/errors.o
 
-$(SERVER_NAME): $(SERVER_OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(SERVER_OBJS) -o $@
+all: $(SERVER) $(CLIENT)
 
-$(CLIENT_NAME): $(CLIENT_OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(CLIENT_OBJS) -o $@
+$(SERVER): $(SRCDIR)/server.o $(OBJS_COMMON)
+	$(CC) $(CFLAGS) $^ -o $(SERVER)
+
+$(CLIENT): $(SRCDIR)/client.o $(OBJS_COMMON)
+	$(CC) $(CFLAGS) $^ -o $(CLIENT)
+
+$(SRCDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(SERVER_OBJS) $(CLIENT_OBJS)
+	rm -f $(SRCDIR)/*.o
 
 fclean: clean
-	rm -f $(SERVER_NAME) $(CLIENT_NAME)
+	rm -f $(SERVER) $(CLIENT)
 
 re: fclean all
-
-$(MINITALK_SRC_PATH)/%.o: $(MINITALK_SRC_PATH)/%.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 .PHONY: all clean fclean re
