@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jde-carv <jde-carv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: devjorginho <devjorginho@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 06:58:26 by jde-carv          #+#    #+#             */
-/*   Updated: 2025/06/13 19:16:49 by jde-carv         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:31:10 by devjorginho      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 int	ft_atoi(const char *s)
 {
-	int	result;
+	int result = 0;
 
-	result = 0;
 	while (*s)
 	{
 		result = result * 10 + (*s - '0');
@@ -24,12 +23,10 @@ int	ft_atoi(const char *s)
 	}
 	return (result);
 }
-
 int	is_numeric(const char *s)
 {
-	int	i;
+	int i = 0;
 
-	i = 0;
 	if (!s || !s[0])
 		return (0);
 	while (s[i])
@@ -40,35 +37,31 @@ int	is_numeric(const char *s)
 	}
 	return (1);
 }
-
 int	ft_strlen(char *s)
 {
-	int	i;
+	int i = 0;
 
-	i = 0;
 	while (s[i])
 		i++;
 	return (i);
 }
-
 void	ft_putstr(char *s)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	while (s[i])
+	while(s[i])
 	{
 		write(1, &s[i], 1);
 		i++;
 	}
 }
-
 void	ft_putnbr(int nb)
 {
-	char	c;
+	char c;
 
-	if (nb > 9)
+	if(nb > 9)
 		ft_putnbr(nb / 10);
 	c = (nb % 10) + '0';
-	write(1, &c, 1);
+	write(1, &c, 1);	
 }
