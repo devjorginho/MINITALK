@@ -45,6 +45,7 @@ It will display its PID.
 ./client <server_pid> "Your message here"
 
 The message will be transmitted character by character via signals.
+
 🎯 Features
 
     Communication via SIGUSR1 and SIGUSR2 signals.
